@@ -1,37 +1,32 @@
-#include <iostream>
-#include <vector>
-using namespace std;
+import sys
 
-template<class T> void chmin(T& a, T b) {
-    if (a > b) {
-        a = b;
-    }
-}
+# æ¯”è¼ƒã—ã¦æœ€å°å€¤ã‚’ä»£å…¥ã™ã‚‹é–¢æ•°
+def chmin(a, b):
+    return min(a, b)
 
-const long long INF = 1LL << 60; // ½½Ê¬Âç¤­¤¤ÃÍ¤È¤¹¤ë (¤³¤³¤Ç¤Ï 2^60)
+# ååˆ†å¤§ãã„å€¤ã¨ã—ã¦ INF ã‚’å®šç¾©
+INF = sys.maxsize
 
-int main() {
-    // ÆşÎÏ
-    int N; cin >> N;
-    vector<long long> h(N);
-    for (int i = 0; i < N; ++i) cin >> h[i];
+def main():
+    # å…¥åŠ›
+    N = int(input())
+    h = list(map(int, input().split()))
 
-    // ½é´ü²½ (ºÇ¾®²½ÌäÂê¤Ê¤Î¤Ç INF ¤Ë½é´ü²½)
-    vector<long long> dp(N, INF);
+    # åˆæœŸåŒ– (æœ€å°åŒ–å•é¡Œãªã®ã§ INF ã«åˆæœŸåŒ–)
+    dp = [INF] * N
 
-    // ½é´ü¾ò·ï
-    dp[0] = 0;
+    # åˆæœŸæ¡ä»¶
+    dp[0] = 0
 
-    // ¥ë¡¼¥×
-    for (int i = 0; i < N; ++i) {
-        if (i + 1 < N) {
-            chmin(dp[i + 1], dp[i] + abs(h[i] - h[i + 1]));
-        }
-        if (i + 2 < N) {
-            chmin(dp[i + 2], dp[i] + abs(h[i] - h[i + 2]));
-        }
-    }
+    # ãƒ«ãƒ¼ãƒ—
+    for i in range(N):
+        if i + 1 < N:
+            dp[i + 1] = chmin(dp[i + 1], dp[i] + abs(h[i] - h[i + 1]))
+        if i + 2 < N:
+            dp[i + 2] = chmin(dp[i + 2], dp[i] + abs(h[i] - h[i + 2]))
 
-    // Åú¤¨
-    cout << dp[N - 1] << endl;
-}
+    # ç­”ãˆ
+    print(dp[N - 1])
+
+if __name__ == "__main__":
+    main()

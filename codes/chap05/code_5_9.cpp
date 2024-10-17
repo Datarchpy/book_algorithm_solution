@@ -1,39 +1,27 @@
-#include <iostream>
-#include <vector>
-using namespace std;
+# æ¯”è¼ƒã—ã¦æœ€å°å€¤ã‚’ä»£å…¥ã™ã‚‹é–¢æ•°
+def chmin(a, b):
+    return min(a, b)
 
-template<class T> void chmin(T& a, T b) {
-    if (a > b) {
-        a = b;
-    }
-}
+INF = 1 << 60  # ååˆ†å¤§ããªå€¤ (ã“ã“ã§ã¯ 2^60 ã¨ã™ã‚‹)
 
-const long long INF = 1LL << 60; // ½½Ê¬Âç¤­¤ÊÃÍ (¤³¤³¤Ç¤Ï 2^60 ¤È¤¹¤ë)
+def main():
+    # å…¥åŠ›
+    N = int(input())
+    c = [list(map(int, input().split())) for _ in range(N + 1)]
 
-int main() {
-    // ÆşÎÏ
-    int N;
-    cin >> N;
-    vector<vector<long long>> c(N + 1, vector<long long>(N + 1));
-    for (int i = 0; i < N + 1; ++i) {
-        for (int j = 0; j < N + 1; ++j) {
-            cin >> c[i][j];
-        }
-    }
-    
-    // DP ¥Æ¡¼¥Ö¥ëÄêµÁ
-    vector<long long> dp(N + 1, INF);
-    
-    // DP ½é´ü¾ò·ï
-    dp[0] = 0;
+    # DP ãƒ†ãƒ¼ãƒ–ãƒ«å®šç¾©
+    dp = [INF] * (N + 1)
 
-    // DP¥ë¡¼¥×
-    for (int i = 0; i <= N; ++i) {
-        for (int j = 0; j < i; ++j) {
-            chmin(dp[i], dp[j] + c[j][i]);
-        }
-    }
-    
-    // Åú¤¨¤Î½ĞÎÏ
-    cout << dp[N] << endl;
-}
+    # DP åˆæœŸæ¡ä»¶
+    dp[0] = 0
+
+    # DPãƒ«ãƒ¼ãƒ—
+    for i in range(N + 1):
+        for j in range(i):
+            dp[i] = chmin(dp[i], dp[j] + c[j][i])
+
+    # ç­”ãˆã®å‡ºåŠ›
+    print(dp[N])
+
+if __name__ == "__main__":
+    main()

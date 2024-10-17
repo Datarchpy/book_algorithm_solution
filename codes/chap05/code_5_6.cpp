@@ -1,51 +1,51 @@
-#include <iostream>
-#include <vector>
-using namespace std;
+import sys
 
-template<class T> void chmin(T& a, T b) {
-    if (a > b) {
-        a = b;
-    }
-}
+# æ¯”è¼ƒã—ã¦æœ€å°å€¤ã‚’ä»£å…¥ã™ã‚‹é–¢æ•°
+def chmin(a, b):
+    return min(a, b)
 
-const long long INF = 1LL << 60; // ½½Ê¬Âç¤­¤¤ÃÍ¤È¤¹¤ë (¤³¤³¤Ç¤Ï 2^60)
+# ååˆ†å¤§ãã„å€¤ã¨ã—ã¦ INF ã‚’å®šç¾©
+INF = sys.maxsize
 
-// ÆşÎÏ¥Ç¡¼¥¿¤È¡¤¥á¥âÍÑ¤Î DP ¥Æ¡¼¥Ö¥ë
-int N;
-vector<long long> h;
-vector<long long> dp;
+# å…¥åŠ›ãƒ‡ãƒ¼ã‚¿ã¨ï¼Œãƒ¡ãƒ¢ç”¨ã® DP ãƒ†ãƒ¼ãƒ–ãƒ«
+N = 0
+h = []
+dp = []
 
-long long rec(int i) {
-    // DP ¤ÎÃÍ¤¬¹¹¿·¤µ¤ì¤Æ¤¤¤¿¤é¤½¤Î¤Ş¤Ş¥ê¥¿¡¼¥ó
-    if (dp[i] < INF) return dp[i];
+def rec(i):
+    # DP ã®å€¤ãŒæ›´æ–°ã•ã‚Œã¦ã„ãŸã‚‰ãã®ã¾ã¾ãƒªã‚¿ãƒ¼ãƒ³
+    if dp[i] < INF:
+        return dp[i]
 
-    // ¥Ù¡¼¥¹¥±¡¼¥¹: Â­¾ì 0 ¤Î¥³¥¹¥È¤Ï 0
-    if (i == 0) return 0;
+    # ãƒ™ãƒ¼ã‚¹ã‚±ãƒ¼ã‚¹: è¶³å ´ 0 ã®ã‚³ã‚¹ãƒˆã¯ 0
+    if i == 0:
+        return 0
 
-    // Åú¤¨¤òÉ½¤¹ÊÑ¿ô¤ò INF ¤Ç½é´ü²½¤¹¤ë
-    long long res = INF;
+    # ç­”ãˆã‚’è¡¨ã™å¤‰æ•°ã‚’ INF ã§åˆæœŸåŒ–ã™ã‚‹
+    res = INF
 
-    // Â­¾ì i - 1 ¤«¤éÍè¤¿¾ì¹ç
-    chmin(res, rec(i - 1) + abs(h[i] - h[i - 1])); 
-    
-    // Â­¾ì i - 2 ¤«¤éÍè¤¿¾ì¹ç
-    if (i > 1) {
-        chmin(res, rec(i - 2) + abs(h[i] - h[i - 2]));
-    }
+    # è¶³å ´ i - 1 ã‹ã‚‰æ¥ãŸå ´åˆ
+    res = chmin(res, rec(i - 1) + abs(h[i] - h[i - 1]))
 
-    // ·ë²Ì¤ò¥á¥â¤·¤Ê¤¬¤é¡¢ÊÖ¤¹
-    return dp[i] = res;
-}
+    # è¶³å ´ i - 2 ã‹ã‚‰æ¥ãŸå ´åˆ
+    if i > 1:
+        res = chmin(res, rec(i - 2) + abs(h[i] - h[i - 2]))
 
-int main() {
-    // ÆşÎÏ¼õ¤±¼è¤ê
-    cin >> N;
-    h.resize(N);
-    for (int i = 0; i < N; ++i) cin >> h[i];
+    # çµæœã‚’ãƒ¡ãƒ¢ã—ãªãŒã‚‰ã€è¿”ã™
+    dp[i] = res
+    return dp[i]
 
-    // ½é´ü²½ (ºÇ¾®²½ÌäÂê¤Ê¤Î¤Ç INF ¤Ë½é´ü²½)
-    dp.assign(N, INF);
+def main():
+    global N, h, dp
+    # å…¥åŠ›å—ã‘å–ã‚Š
+    N = int(input())
+    h = list(map(int, input().split()))
 
-    // Åú¤¨
-    cout << rec(N - 1) << endl;
-}
+    # åˆæœŸåŒ– (æœ€å°åŒ–å•é¡Œãªã®ã§ INF ã«åˆæœŸåŒ–)
+    dp = [INF] * N
+
+    # ç­”ãˆ
+    print(rec(N - 1))
+
+if __name__ == "__main__":
+    main()

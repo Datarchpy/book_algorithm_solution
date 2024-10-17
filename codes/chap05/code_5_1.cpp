@@ -1,27 +1,30 @@
-#include <iostream>
-#include <vector>
-using namespace std;
-const long long INF = 1LL << 60; // ½½Ê¬Âç¤­¤¤ÃÍ¤È¤¹¤ë (¤³¤³¤Ç¤Ï 2^60)
+import sys
 
-int main() {
-    // ÆşÎÏ
-    int N; cin >> N;
-    vector<long long> h(N);
-    for (int i = 0; i < N; ++i) cin >> h[i];
+# ååˆ†å¤§ãã„å€¤ã¨ã—ã¦ INF ã‚’å®šç¾©
+INF = sys.maxsize
 
-    // ÇÛÎó dp ¤òÄêµÁ (ÇÛÎóÁ´ÂÎ¤òÌµ¸ÂÂç¤òÉ½¤¹ÃÍ¤Ë½é´ü²½)
-    vector<long long> dp(N, INF);
+def main():
+    # å…¥åŠ›
+    N = int(input())
+    h = list(map(int, input().split()))
 
-    // ½é´ü¾ò·ï
-    dp[0] = 0;
+    # é…åˆ— dp ã‚’å®šç¾© (é…åˆ—å…¨ä½“ã‚’ç„¡é™å¤§ã‚’è¡¨ã™å€¤ã«åˆæœŸåŒ–)
+    dp = [INF] * N
 
-    // ¥ë¡¼¥×
-    for (int i = 1; i < N; ++i) {
-        if (i == 1) dp[i] = abs(h[i] - h[i - 1]);
-        else dp[i] = min(dp[i - 1] + abs(h[i] - h[i - 1]), 
-                         dp[i - 2] + abs(h[i] - h[i - 2]));
-    }
+    # åˆæœŸæ¡ä»¶
+    dp[0] = 0
 
-    // Åú¤¨
-    cout << dp[N - 1] << endl;
-}
+    # ãƒ«ãƒ¼ãƒ—
+    for i in range(1, N):
+        if i == 1:
+            dp[i] = abs(h[i] - h[i - 1])
+        else:
+            dp[i] = min(dp[i - 1] + abs(h[i] - h[i - 1]),
+                        dp[i - 2] + abs(h[i] - h[i - 2]))
+
+    # ç­”ãˆ
+    print(dp[N - 1])
+
+if __name__ == "__main__":
+    main()
+

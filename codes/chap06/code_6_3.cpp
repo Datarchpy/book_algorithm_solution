@@ -1,26 +1,26 @@
-#include <iostream>
-using namespace std;
+def main():
+    print("Start Game!")
 
-int main() {
-    cout << "Start Game!" << endl;
+    # A ã•ã‚“ã®æ•°ã®å€™è£œã‚’è¡¨ã™åŒºé–“ã‚’ã€[left, right) ã¨è¡¨ã™
+    left, right = 20, 36
 
-    // A ¤µ¤ó¤Î¿ô¤Î¸õÊä¤òÉ½¤¹¶è´Ö¤ò¡¢[left, right) ¤ÈÉ½¤¹
-    int left = 20, right = 36;
+    # A ã•ã‚“ã®æ•°ã‚’ 1 ã¤ã«çµã‚Œãªã„ã†ã¡ã¯ç¹°ã‚Šè¿”ã™
+    while right - left > 1:
+        mid = left + (right - left) // 2  # åŒºé–“ã®çœŸã‚“ä¸­
 
-    // A ¤µ¤ó¤Î¿ô¤ò 1 ¤Ä¤Ë¹Ê¤ì¤Ê¤¤¤¦¤Á¤Ï·«¤êÊÖ¤¹
-    while (right - left > 1) {
-        int mid = left + (right - left) / 2; // ¶è´Ö¤Î¿¿¤óÃæ
+        # mid ä»¥ä¸Šã‹ã‚’èã„ã¦ã€å›ç­”ã‚’ yes/no ã§å—ã‘å–ã‚‹
+        print(f"Is the age less than {mid} ? (yes / no)")
+        ans = input()
 
-        // mid °Ê¾å¤«¤òÊ¹¤¤¤Æ¡¢²óÅú¤ò yes/no ¤Ç¼õ¤±¼è¤ë
-        cout << "Is the age less than " << mid << " ? (yes / no)" << endl;
-        string ans;
-        cin >> ans;
+        # å›ç­”ã«å¿œã˜ã¦ã€ã‚ã‚Šã†ã‚‹æ•°ã®ç¯„å›²ã‚’çµã‚‹
+        if ans == "yes":
+            right = mid
+        else:
+            left = mid
 
-        // ²óÅú¤Î±ş¤¸¤Æ¡¢¤¢¤ë¤¦¤ë¿ô¤ÎÈÏ°Ï¤ò¹Ê¤ë
-        if (ans == "yes") right = mid;
-        else left = mid;
-    }
+    # ã‚ºãƒãƒªå½“ã¦ã‚‹ï¼
+    print(f"The age is {left}!")
 
-    // ¥º¥Ğ¥êÅö¤Æ¤ë¡ª
-    cout << "The age is " << left << "!" << endl;
-}
+if __name__ == "__main__":
+    main()
+

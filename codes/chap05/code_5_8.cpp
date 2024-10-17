@@ -1,48 +1,41 @@
-#include <iostream>
-#include <string>
-#include <vector>
-using namespace std;
+# æ¯”è¼ƒã—ã¦æœ€å°å€¤ã‚’ä»£å…¥ã™ã‚‹é–¢æ•°
+def chmin(a, b):
+    return min(a, b)
 
-template<class T> void chmin(T& a, T b) {
-    if (a > b) {
-        a = b;
-    }
-}
+# 1 << 29 ã¯ãƒ“ãƒƒãƒˆã‚·ãƒ•ãƒˆæ¼”ç®—ã§ã€1 ã‚’ 29 ãƒ“ãƒƒãƒˆå·¦ã«ã‚·ãƒ•ãƒˆã™ã‚‹ã“ã¨ã§ 2^29 ã‚’è¨ˆç®—ã—ã¦ã„ã¾ã™
+INF = 1 << 29  # ååˆ†å¤§ããªå€¤ (ã“ã“ã§ã¯ 2^29 ã¨ã™ã‚‹)
 
-const int INF = 1 << 29; // ½½Ê¬Âç¤­¤ÊÃÍ (¤³¤³¤Ç¤Ï 2^29 ¤È¤¹¤ë)
+def main():
+    # å…¥åŠ›
+    S = input()
+    T = input()
 
-int main() {
-    // ÆşÎÏ
-    string S, T;
-    cin >> S >> T;
-    
-    // DP ¥Æ¡¼¥Ö¥ëÄêµÁ
-    vector<vector<int>> dp(S.size() + 1, vector<int>(T.size() + 1, INF));
+    # DP ãƒ†ãƒ¼ãƒ–ãƒ«å®šç¾©
+    dp = [[INF] * (len(T) + 1) for _ in range(len(S) + 1)]
 
-    // DP ½é´ü¾ò·ï
-    dp[0][0] = 0;
+    # DP åˆæœŸæ¡ä»¶
+    dp[0][0] = 0
 
-    // DP¥ë¡¼¥×
-    for (int i = 0; i <= S.size(); ++i) {
-        for (int j = 0; j <= T.size(); ++j) {
-            // ÊÑ¹¹Áàºî
-            if (i > 0 && j > 0) {
-                if (S[i - 1] == T[j - 1]) {
-                    chmin(dp[i][j], dp[i - 1][j - 1]);
-                }
-                else {
-                    chmin(dp[i][j], dp[i - 1][j - 1] + 1);
-                }
-            }
-            
-            // ºï½üÁàºî
-            if (i > 0) chmin(dp[i][j], dp[i - 1][j] + 1);
+    # DPãƒ«ãƒ¼ãƒ—
+    for i in range(len(S) + 1):
+        for j in range(len(T) + 1):
+            # å¤‰æ›´æ“ä½œ
+            if i > 0 and j > 0:
+                if S[i - 1] == T[j - 1]:
+                    dp[i][j] = chmin(dp[i][j], dp[i - 1][j - 1])
+                else:
+                    dp[i][j] = chmin(dp[i][j], dp[i - 1][j - 1] + 1)
 
-            // ÁŞÆşÁàºî
-            if (j > 0) chmin(dp[i][j], dp[i][j - 1] + 1);
-        }
-    }
-    
-    // Åú¤¨¤Î½ĞÎÏ
-    cout << dp[S.size()][T.size()] << endl;
-}
+            # å‰Šé™¤æ“ä½œ
+            if i > 0:
+                dp[i][j] = chmin(dp[i][j], dp[i - 1][j] + 1)
+
+            # æŒ¿å…¥æ“ä½œ
+            if j > 0:
+                dp[i][j] = chmin(dp[i][j], dp[i][j - 1] + 1)
+
+    # ç­”ãˆã®å‡ºåŠ›
+    print(dp[len(S)][len(T)])
+
+if __name__ == "__main__":
+    main()

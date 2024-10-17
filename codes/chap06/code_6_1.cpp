@@ -1,28 +1,28 @@
-#include <iostream>
-#include <vector>
-using namespace std;
+N = 8
+a = [3, 5, 8, 10, 14, 17, 21, 39]
 
-const int N = 8;
-const vector<int> a = {3, 5, 8, 10, 14, 17, 21, 39};
+# ç›®çš„ã®å€¤ key ã®æ·»å­—ã‚’è¿”ã™ (å­˜åœ¨ã—ãªã„å ´åˆã¯ -1)
+def binary_search(key):
+    left, right = 0, len(a) - 1  # é…åˆ— a ã®å·¦ç«¯ã¨å³ç«¯
+    while right >= left:
+        mid = left + (right - left) // 2  # åŒºé–“ã®çœŸã‚“ä¸­
+        if a[mid] == key:
+            return mid
+        elif a[mid] > key:
+            right = mid - 1
+        else:
+            left = mid + 1
+    return -1
 
-// ÌÜÅª¤ÎÃÍ key ¤ÎÅº»ú¤òÊÖ¤¹ (Â¸ºß¤·¤Ê¤¤¾ì¹ç¤Ï -1)
-int binary_search(int key) {
-    int left = 0, right = (int)a.size() - 1; // ÇÛÎó a ¤Îº¸Ã¼¤È±¦Ã¼
-    while (right >= left) {
-        int mid = left + (right - left) / 2; // ¶è´Ö¤Î¿¿¤óÃæ
-        if (a[mid] == key) return mid;
-        else if (a[mid] > key) right = mid - 1;
-        else if (a[mid] < key) left = mid + 1;
-    }
-    return -1;
-}
+def main():
+    print(binary_search(10))  # 3
+    print(binary_search(3))   # 0
+    print(binary_search(39))  # 7
 
-int main() {
-    cout << binary_search(10) << endl; // 3
-    cout << binary_search(3) << endl; // 0
-    cout << binary_search(39) << endl; // 7
+    print(binary_search(-100))  # -1
+    print(binary_search(9))     # -1
+    print(binary_search(100))   # -1
 
-    cout << binary_search(-100) << endl; // -1
-    cout << binary_search(9) << endl; // -1
-    cout << binary_search(100) << endl; // -1
-}
+if __name__ == "__main__":
+    main()
+

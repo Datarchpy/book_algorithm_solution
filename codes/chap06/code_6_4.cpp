@@ -1,39 +1,35 @@
-#include <iostream>
-#include <vector>
-#include <algorithm> // sort() ¤ä lower_bound() ¤ËÉ¬Í×¤Ç¤¹
-using namespace std;
-const int INF = 20000000; // ½½Ê¬Âç¤­¤ÊÃÍ¤Ë
+import bisect
 
-int main() {
-    // ÆşÎÏ¤ò¼õ¤±¼è¤ë
-    int N, K;
-    cin >> N >> K;
-    vector<int> a(N), b(N);
-    for (int i = 0; i < N; ++i) cin >> a[i];
-    for (int i = 0; i < N; ++i) cin >> b[i];
+INF = 20000000  # ååˆ†å¤§ããªå€¤ã«
 
-    // »ÃÄêºÇ¾®ÃÍ¤ò³ÊÇ¼¤¹¤ëÊÑ¿ô
-    int min_value = INF;
+def main():
+    # å…¥åŠ›ã‚’å—ã‘å–ã‚‹
+    N, K = map(int, input().split())
+    a = list(map(int, input().split()))
+    b = list(map(int, input().split()))
 
-    // b ¤ò¥½¡¼¥È
-    sort(b.begin(), b.end());
+    # æš«å®šæœ€å°å€¤ã‚’æ ¼ç´ã™ã‚‹å¤‰æ•°
+    min_value = INF
 
-    // b ¤ËÌµ¸ÂÂç¤òÉ½¤¹ÃÍ (INF) ¤òÄÉ²Ã¤·¤Æ¤ª¤¯
-    // ¤³¤ì¤ò¹Ô¤¦¤³¤È¤Ç¡¢iter = b.end() ¤È¤Ê¤ë²ÄÇ½À­¤ò½ü³°¤¹¤ë
-    b.push_back(INF);
+    # b ã‚’ã‚½ãƒ¼ãƒˆ
+    b.sort()
 
-    // a ¤ò¸ÇÄê¤·¤Æ²ò¤¯
-    for (int i = 0; i < N; ++i) {
-        // b ¤ÎÃæ¤Ç K - a[i] °Ê¾å¤ÎÈÏ°Ï¤Ç¤ÎºÇ¾®ÃÍ¤ò¼¨¤¹¥¤¥Æ¥ì¡¼¥¿
-        auto iter = lower_bound(b.begin(), b.end(), K - a[i]);
+    # b ã«ç„¡é™å¤§ã‚’è¡¨ã™å€¤ (INF) ã‚’è¿½åŠ ã—ã¦ãŠã
+    b.append(INF)
 
-        // ¥¤¥Æ¥ì¡¼¥¿¤Î¼¨¤¹ÃÍ¤ò¼è¤ê½Ğ¤¹
-        int val = *iter;
+    # a ã‚’å›ºå®šã—ã¦è§£ã
+    for i in range(N):
+        # b ã®ä¸­ã§ K - a[i] ä»¥ä¸Šã®ç¯„å›²ã§ã®æœ€å°å€¤ã‚’ç¤ºã™ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿
+        idx = bisect.bisect_left(b, K - a[i])
 
-        // min_value ¤ÈÈæ³Ó¤¹¤ë
-        if (a[i] + val < min_value) {
-            min_value = a[i] + val;
-        }
-    }
-    cout << min_value << endl;
-}
+        # ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿ã®ç¤ºã™å€¤ã‚’å–ã‚Šå‡ºã™
+        val = b[idx]
+
+        # min_value ã¨æ¯”è¼ƒã™ã‚‹
+        if a[i] + val < min_value:
+            min_value = a[i] + val
+
+    print(min_value)
+
+if __name__ == "__main__":
+    main()

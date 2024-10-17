@@ -1,42 +1,46 @@
-#include <iostream>
-#include <algorithm>
-#include <vector>
-using namespace std;
+def main():
+    # å…¥åŠ›
+    N = int(input())
+    H = []
+    S = []
+    for _ in range(N):
+        h, s = map(int, input().split())
+        H.append(h)
+        S.append(s)
 
-int main() {
-    // ÆşÎÏ
-    int N;
-    cin >> N;
-    vector<long long> H(N), S(N);
-    for (int i = 0; i < N; i++) cin >> H[i] >> S[i];
+    # äºŒåˆ†æ¢ç´¢ã®ä¸Šé™å€¤ã‚’æ±‚ã‚ã‚‹
+    M = 0
+    for i in range(N):
+        M = max(M, H[i] + S[i] * N)
 
-    // ÆóÊ¬Ãµº÷¤Î¾å¸ÂÃÍ¤òµá¤á¤ë
-    long long M = 0;
-    for (int i = 0; i < N; ++i) M = max(M, H[i] + S[i] * N);
+    # äºŒåˆ†æ¢ç´¢
+    left, right = 0, M
+    while right - left > 1:
+        mid = (left + right) // 2
 
-    // ÆóÊ¬Ãµº÷
-    long long left = 0, right = M;
-    while (right - left > 1) {
-        long long mid = (left + right) / 2;
-        
-        // È½Äê¤¹¤ë
-        bool ok = true;
-        vector<long long> t(N, 0);  // ³ÆÉ÷Á¥¤ò³ä¤ë¤Ş¤Ç¤ÎÀ©¸Â»ş´Ö
-        for (int i = 0; i < N; ++i) {
-            // ¤½¤â¤½¤â mid ¤¬½é´ü¹âÅÙ¤è¤êÄã¤«¤Ã¤¿¤é false
-            if (mid < H[i]) ok = false; 
-            else t[i] = (mid - H[i]) / S[i];
-        }
-        // »ş´ÖÀ©¸Â¤¬¤µ¤·Ç÷¤Ã¤Æ¤¤¤ë½ç¤Ë¥½¡¼¥È ¤¹¤ë
-        sort(t.begin(), t.end()); 
-        for (int i = 0; i < N; ++i) {
-            // »ş´ÖÀÚ¤ìÈ¯À¸¤Î¾ì¹ç¤Ï false
-            if (t[i] < i) ok = false; 
-        }
+        # åˆ¤å®šã™ã‚‹
+        ok = True
+        t = [0] * N  # å„é¢¨èˆ¹ã‚’å‰²ã‚‹ã¾ã§ã®åˆ¶é™æ™‚é–“
+        for i in range(N):
+            # ãã‚‚ãã‚‚ mid ãŒåˆæœŸé«˜åº¦ã‚ˆã‚Šä½ã‹ã£ãŸã‚‰ False
+            if mid < H[i]:
+                ok = False
+            else:
+                t[i] = (mid - H[i]) // S[i]
 
-        if (ok) right = mid;
-        else left = mid;
-    }
+        # æ™‚é–“åˆ¶é™ãŒã•ã—è¿«ã£ã¦ã„ã‚‹é †ã«ã‚½ãƒ¼ãƒˆ
+        t.sort()
+        for i in range(N):
+            # æ™‚é–“åˆ‡ã‚Œç™ºç”Ÿã®å ´åˆã¯ False
+            if t[i] < i:
+                ok = False
 
-    cout << right << endl;
-}
+        if ok:
+            right = mid
+        else:
+            left = mid
+
+    print(right)
+
+if __name__ == "__main__":
+    main()

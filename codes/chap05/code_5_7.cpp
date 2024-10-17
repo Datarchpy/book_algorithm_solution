@@ -1,38 +1,32 @@
-#include <iostream>
-#include <vector>
-using namespace std;
+# æ¯”è¼ƒã—ã¦æœ€å¤§å€¤ã‚’ä»£å…¥ã™ã‚‹é–¢æ•°
+def chmax(a, b):
+    return max(a, b)
 
-template<class T> void chmax(T& a, T b) {
-    if (a < b) {
-        a = b;
-    }
-}
+def main():
+    # å…¥åŠ›
+    N, W = map(int, input().split())
+    weight = []
+    value = []
+    for _ in range(N):
+        w, v = map(int, input().split())
+        weight.append(w)
+        value.append(v)
 
-int main() {
-    // ÆşÎÏ
-    int N;
-    long long W;
-    cin >> N >> W;
-    vector<long long> weight(N), value(N);
-    for (int i = 0; i < N; ++i) cin >> weight[i] >> value[i];
+    # DP ãƒ†ãƒ¼ãƒ–ãƒ«å®šç¾©
+    dp = [[0] * (W + 1) for _ in range(N + 1)]
 
-    // DP ¥Æ¡¼¥Ö¥ëÄêµÁ
-    vector<vector<long long>> dp(N + 1, vector<long long>(W + 1, 0));
+    # DPãƒ«ãƒ¼ãƒ—
+    for i in range(N):
+        for w in range(W + 1):
+            # i ç•ªç›®ã®å“ç‰©ã‚’é¸ã¶å ´åˆ
+            if w - weight[i] >= 0:
+                dp[i + 1][w] = chmax(dp[i + 1][w], dp[i][w - weight[i]] + value[i])
 
-    // DP¥ë¡¼¥×
-    for (int i = 0; i < N; ++i) {
-        for (int w = 0; w <= W; ++w) {
+            # i ç•ªç›®ã®å“ç‰©ã‚’é¸ã°ãªã„å ´åˆ
+            dp[i + 1][w] = chmax(dp[i + 1][w], dp[i][w])
 
-            // i ÈÖÌÜ¤ÎÉÊÊª¤òÁª¤Ö¾ì¹ç
-            if (w - weight[i] >= 0) {
-                chmax(dp[i + 1][w], dp[i][w - weight[i]] + value[i]);
-            }
+    # æœ€é©å€¤ã®å‡ºåŠ›
+    print(dp[N][W])
 
-            // i ÈÖÌÜ¤ÎÉÊÊª¤òÁª¤Ğ¤Ê¤¤¾ì¹ç
-            chmax(dp[i + 1][w], dp[i][w]);
-        }
-    }
-
-    // ºÇÅ¬ÃÍ¤Î½ĞÎÏ
-    cout << dp[N][W] << endl;
-}
+if __name__ == "__main__":
+    main()
